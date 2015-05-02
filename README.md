@@ -4,6 +4,36 @@
 2. Use it
 3. Present to group.
 
+# Idea: 
+API: [Spotify](https://developer.spotify.com/web-api/)
+App: 
+1. Show which member of the group contributed which songs to the playlist?
+2. How many times they were played.
+
+Playlist URL: https://play.spotify.com/user/1242734119/playlist/0TfhLEsZWwxwmspQ9lQtaZ
+
+OAuth token: BQCpGJ-Dwnlh9N4_qBZzGasnQqNsxpWlzUgTD0Mua8baUqeQmPPH8EH8W-0KUAYbZn18wt5rmrgvR876U3kZIa_VtvZqzFaVVRfB-POAbl3Y0UX37TUmW1t71mtL9LCZBZO3CK3erIUBiP2iKcA
+
+## Get Playlist Info:
+API call: "https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tracks" -H "Accept: application/json" -H "Authorization: Bearer BQCpGJ-Dwnlh9N4_qBZzGasnQqNsxpWlzUgTD0Mua8baUqeQmPPH8EH8W-0KUAYbZn18wt5rmrgvR876U3kZIa_VtvZqzFaVVRfB-POAbl3Y0UX37TUmW1t71mtL9LCZBZO3CK3erIUBiP2iKcA
+
+## 
+
+## Full Assignment
+Weekend Challenge, Round 3!
+
+Welcome to the weekend everyone! This weekends work is all about research. As you know, you will be researching an API. There are literally TONS out there (ok, ok, there are a lot, but I suppose they have no actual weight, as code is not a tangible thing. Think about that…. Trippy I know). In any case, there are a lot. Twitter has one, Google has several. There are APIs for weather, games, movies, music, GitHub. All over the place! Please be aware that some cost money. Don’t pick one of those.
+
+Find one that speaks to your personal interests. Or even check out CodeAcademy and check out the bottom of their courses. There is a section specifically on how to use various APIs for popular services. Pay close attention to which language the tutorial is in, as not all are Javascript based. 
+
+Ok, you found an API. Awesome. Your task now is to research a bit and see how ‘it works’. Note that I am not specifically calling out that ‘you need to get it to work’. If you do, awesome. If not, don’t let it destroy your well deserved weekend. Just research and see what kinds of things it would return. User names? Tweets? Repos? What information is the API providing to you the developer?
+
+THEEEEEEEN, what we want you to do is come up with 3-4 ideas of things you could use that API to build. Your imagination is allowed to run a little free here. Just make sure its a bite sized application for something you COULD build is a relatively realistic timeframe (maybe we will ask you to build one later! Hint hint). On Monday, before our lecture, we will have each person come up and discuss their findings.
+
+Go forth and conquer. But maybe more importantly, have a great weekend. Come back recharged.
+
+ALSO: If you are needing some love on the AJAX side, know that CodeSchool covers AJAX in the jQuery : Return Flight course. Check that out if you want some extra grounding.
+
 ## 1. Research an API
 
 Codeacademy has courses on a number of APIs, not so many are in Javascript. 
@@ -175,3 +205,12 @@ function onYouTubeApiLoad() {
     
 }
 ```
+
+Loading the JavaScript client library
+We'll start with a exercise that performs some common setup tasks needed to make YouTube Data API calls using the Google APIs JavaScript client library. Don't worry—we'll get to the exciting stuff as soon as that's done!
+
+This boilerplate code sets up a basic HTML document, search.html, and includes two JavaScript files. One is the [Google APIs JavaScript client library](https://github.com/google/google-api-javascript-client), and the other, search.js, is what we'll use for our custom code.
+
+When the client library is loaded, it automatically calls onClientLoad() [line 11] for us. That, in turn, loads in some extra code needed to make YouTube requests [line 12]. Finally, once that's complete, we set an API key [line 19]. When you're writing your own programs that talk to the YouTube API, you'll need to apply for your own key, but for now, we can use an existing key set up for this lesson.
+
+In the course of this lesson, we'll need to display the results of YouTube Data API calls in the browser. showResponse() [line 5] is a simple function that takes a JavaScript value and adds it to a visible element in our HTML page.
