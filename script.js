@@ -12,7 +12,7 @@ https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tra
 
 */
 
-var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr = [], j;
+var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr = [], j, trackArr;
 var placeholder = "http://placekitten.com/200/300";
 
 Array.prototype.unique2 = function()
@@ -81,45 +81,42 @@ function getStuff(obj) {
         });
     }
 
-    // Wait for above ajax to complete
+    // Wait for all above ajax requests to complete
     function checkIfFinished(){
-        console.log(personArr.length == userArr.length);
+        //console.log(personArr.length == userArr.length);
         return(personArr.length == userArr.length);
     }
 
     var checkInterval = setInterval(function(){
         if(checkIfFinished()){
             clearInterval(checkInterval);
+            songCheck();
         }
     }, 100);
 
-//    while(!isFinished){
-//        checkIfFinished();
-//    }
-//}
-//    while(isfinished){
-//        if(checkIfFinished()){
-//            returnResults();
-//            isfinished = true;
-//        }
-//        else {
-//        //Wait 100ms
-//        var timeout = setInterval(function()
-//        { if(checkIfFinished()) { clearInterval(timeout); isFinished = true; } }, 100);
-//    }
+}
+
+function songCheck(){
     // Add songs to person objects.
     // Loop through each song, subloop through each object.
-    // Problem: above ajax will probably not be complete yet. How can we wait for this?
 
     // Extract key pieces of data
     userHref = playlistArr[0].added_by.href;
+    trackArr = playlistArr[0].track;
     trackName = playlistArr[0].track.name;
     trackArtist = playlistArr[0].track.artists[0].name;
     trackHref = playlistArr[0].track.preview_url;
-    //for(j = 0; j < personArr.length)
-
+    // Loop through person objects checking href against song href.
+    // Problem: it does reach this before ajaxes are finished.
+    for(j = 0; j < personArr.length; j++){
+            console.log(j);
+        if(userHref==personArr[j].href){
+            personArr[j].songs.push(trackArr);
+        }
+    }
 
 }
+
 function displayStuff(){
     // Display
     $('.results').append('Added By: ' + userName + '<img src=' + userImg + '>' + '<br>Song: ' + trackName + '<br>Artist: ' + trackArtist + '<br><a href=' + trackHref + '>Play song</a>');
