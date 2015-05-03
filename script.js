@@ -107,10 +107,24 @@ function displayStuff(user){
     var checkInterval = setInterval(function(){
         if(checkIfFinished()){
             clearInterval(checkInterval);
+            var songRows = "";
+            // Process Songs.
+            for(i = 0; i < user.songs.length; i++){
+                trackName = user.songs[i].track.name;
+                trackArtist = user.songs[i].track.artists[0].name;
+                trackHref = user.songs[i].track.preview_url;
+
+                songRows += "<div class='row'><span class='trackName'>Track Name: " + trackName +
+                    "<span class = 'Artist'>Artist: " + trackArtist +
+                    "<a class='playTrack' href=" + trackHref + ">Play Track</a>" +
+                    "</div>";
+            }
+
 
             // Do the displaying:
             $('.results').append('<div class="gallery-head">' + user['userName'] + '</div>');
             $('.results').append('<div class="gallery-img"><img src="' + user['userImg'] + '"></div>');
+            $('.results').append('<div class="gallery-songs"><h4>Songs Added: </h4><p>' + songRows + '</p></div>');
 
         }
     }, 100);
