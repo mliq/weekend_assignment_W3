@@ -16,7 +16,34 @@ https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tra
 //var access_token = 'BQBSWPXdOapkLMqzKjvIYmIItqGtK2tUZhlFmeazjyg3I0rqH7YE_p4rXZgJ8jGNfgBggYy5tue1L';
 
 //var redirectString = encodeURI('http://localhost:63342');
-var accessToken = null;
+var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg;
+
+function getStuff(obj) {
+    // Array of tracks
+    playlistArr = obj.tracks.items;
+    userHref = playlistArr[0].added_by.href;
+    trackName = playlistArr[0].track.name;
+    trackArtist = playlistArr[0].track.artists[0].name;
+    trackHref = playlistArr[0].track.preview_url;
+
+    // Get user's profile from href
+    $.ajax({
+        url: userHref,
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        },
+        success: function (response) {
+            userName = response.display_name;
+            userImg = response.images[0].url;
+            console.log(response);
+            displayStuff();
+        }
+    });
+}
+function displayStuff(){
+    // Display
+    $('.results').append('Added By: ' + userName + '<img src=' + userImg + '>' + '<br>Song: ' + trackName + '<br>Artist: ' + trackArtist + '<br><a href=' + trackHref + '>Play song</a>');
+}
 
 $(document).ready(function(){
 
@@ -39,10 +66,9 @@ $(document).ready(function(){
             },
             success: function (response) {
                 console.log(response);
+                getStuff(response);
             }
         });
-
-
     }
 });
 
