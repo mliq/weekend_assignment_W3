@@ -12,7 +12,7 @@ https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tra
 
 */
 
-var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr = [];
+var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr = [], j;
 var placeholder = "http://placekitten.com/200/300";
 
 Array.prototype.unique2 = function()
@@ -54,7 +54,6 @@ function getStuff(obj) {
     userArr = userArr.unique2();
 
     // Now make all of those objects with href, name, image, and songs array
-    // Wait, maybe this would work if i was making a new object? And just pushing.
 
     for(i = 0; i < userArr.length; i++){
         // Get user's profile from href
@@ -82,25 +81,44 @@ function getStuff(obj) {
         });
     }
 
+    // Wait for above ajax to complete
+    function checkIfFinished(){
+        console.log(personArr.length == userArr.length);
+        return(personArr.length == userArr.length);
+    }
+
+    var checkInterval = setInterval(function(){
+        if(checkIfFinished()){
+            clearInterval(checkInterval);
+        }
+    }, 100);
+
+//    while(!isFinished){
+//        checkIfFinished();
+//    }
+//}
+//    while(isfinished){
+//        if(checkIfFinished()){
+//            returnResults();
+//            isfinished = true;
+//        }
+//        else {
+//        //Wait 100ms
+//        var timeout = setInterval(function()
+//        { if(checkIfFinished()) { clearInterval(timeout); isFinished = true; } }, 100);
+//    }
+    // Add songs to person objects.
+    // Loop through each song, subloop through each object.
+    // Problem: above ajax will probably not be complete yet. How can we wait for this?
+
     // Extract key pieces of data
     userHref = playlistArr[0].added_by.href;
     trackName = playlistArr[0].track.name;
     trackArtist = playlistArr[0].track.artists[0].name;
     trackHref = playlistArr[0].track.preview_url;
+    //for(j = 0; j < personArr.length)
 
-    // Get user's profile from href
-    $.ajax({
-        url: userHref,
-        headers: {
-            'Authorization': 'Bearer ' + accessToken
-        },
-        success: function (response) {
-            userName = response.display_name;
-            userImg = response.images[0].url;
-            console.log(response);
-            displayStuff();
-        }
-    });
+
 }
 function displayStuff(){
     // Display

@@ -11,6 +11,11 @@ App:
   - Format: List of user names, click on them and it expands which songs they added? Eh maybe better something that could be browsed... Could have an expand all button also...  Or show just the profile images... I like that idea.
 2. How many times they were played.
 
+## Learnings:
+1. document.url, .hash to get auth code, registering an API application.
+2. jQuery .when for resolving multiple AJAX requests.
+
+
 ## URLs
 Playlist URL: https://play.spotify.com/user/1242734119/playlist/0TfhLEsZWwxwmspQ9lQtaZ
 
