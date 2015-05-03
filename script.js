@@ -14,6 +14,7 @@ https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tra
 
 var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr, j, trackArr, userId;
 var placeholder = "http://placekitten.com/g/200/300";
+var currentGame = 0;
 
 Array.prototype.unique2 = function()
 { // Source: http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
@@ -78,23 +79,34 @@ function getUserInfo(person){
 
 }
 
-/*
-    // Extract key pieces of data
-    userHref = playlistArr[0].added_by.href;
-    trackArr = playlistArr[0].track;
-    trackName = playlistArr[0].track.name;
-    trackArtist = playlistArr[0].track.artists[0].name;
-    trackHref = playlistArr[0].track.preview_url;
-    // Loop through person objects checking href against song href.
-    // Problem: it does reach this before ajaxes are finished.
-    for(j = 0; j < personArr.length; j++){
-            console.log(j);
-        if(userHref==personArr[j].href){
-            personArr[j].songs.push(trackArr);
-        }
+// Button functionality
+function showNextGame() {
+    // Check if "next" index is not going to be invalid
+    if (currentGame+1 < games.length) {
+        currentGame++;
     }
+    else {
+        currentGame = 0;
+    }
+    selectGameIcon();
+    $('.js-gallery-game').fadeOut(function(){
+        games[currentGame].display();
+    });
+}
 
-*/
+function showPrevGame() {
+    // Check if "previous" index is not going to be invalid
+    if (currentGame-1 >= 0) {
+        currentGame--;
+    }
+    else {
+        currentGame = games.length-1;
+    }
+    selectGameIcon();
+    $('.js-gallery-game').fadeOut(function(){
+        games[currentGame].display();
+    });
+}
 
 function displayStuff(user){
     console.log(user);
@@ -114,37 +126,22 @@ function displayStuff(user){
                 trackArtist = user.songs[i].track.artists[0].name;
                 trackHref = user.songs[i].track.preview_url;
 
-                songRows += "<div class='row'><span class='trackName'>Track Name: " + trackName +
-                    "<span class = 'Artist'>Artist: " + trackArtist +
-                    "<a class='playTrack' href=" + trackHref + ">Play Track</a>" +
+                songRows += "<div class='row col-xs-12'><span class='trackName col-xs-3'>Track: " + trackName +
+                    "</span><span class = 'Artist col-xs-3'>Artist: " + trackArtist +
+                    "</span><a class='playTrack col-xs-3' href=" + trackHref + ">Play Track</a>" +
                     "</div>";
             }
 
 
             // Do the displaying:
+            $('.results').empty();
+            $('.results').hide();
             $('.results').append('<div class="gallery-head">' + user['userName'] + '</div>');
             $('.results').append('<div class="gallery-img"><img src="' + user['userImg'] + '"></div>');
-            $('.results').append('<div class="gallery-songs"><h4>Songs Added: </h4><p>' + songRows + '</p></div>');
-
+            $('.results').append('<div class="gallery-songs col-xs-12"><h4>Songs Added: </h4><p>' + songRows + '</p></div>');
+            $('.results').slideDown(2000);
         }
     }, 100);
-
-    // Seems like problem might be that the data is not here yet.
-
-
-    // Display
-    //$('.results').append('Added By: ' + userName + '<img src=' + userImg + '>' + '<br>Song: ' + trackName + '<br>Artist: ' + trackArtist + '<br><a href=' + trackHref + '>Play song</a>');
-
-    //$gallery = $('.results');
-    // Build the new game's information
-    //$gallery.empty();
-    //$('.results').append('<div class="gallery-head">' + user['userName'] + '</div>');
-    //$gallery.append('<div class="gallery-img"><img src="' + user.userImg + '"></div>');
-    //$gallery.append('<div class="gallery-platforms"><h4>Platforms</h4><p>' + user.platforms + '</p></div>');
-    //$gallery.append('<div class="gallery-desc"><h4>Description</h4><p>' + this.deck + '</p><button class="btn btn-default js-btn-read">Show Details</button></div>');
-    //$gallery.append('<div class="gallery-details hidden">' + this.description + "</div>");
-    // Fade in the new game
-    //$gallery.fadeIn();
 }
 
 
