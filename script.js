@@ -37,59 +37,57 @@ Array.prototype.unique2 = function()
 //}
 
 function getStuff(obj) {
-    // How can I sort into usernames?
-    // Hm... I could make each user an Object.
-    // First cycle through and collect each unique user.
-    // Then add their songs to an array of songs
-
     // Array of tracks
     playlistArr = obj.tracks.items;
-
-    // Let's try to do it with one cycle.
-    // Cycle through songs, if userHref is a person already, add it, otherwise, create person.
-    // Can do it by assigning the object names as the href? that will be ugly though.
-    // do by added_by.id instead.
     userArr = [], personArr = {};
 
     for(i=0; i < playlistArr.length; i++) {
         userId = playlistArr[i].added_by.id;
-
         if(typeof personArr[userId] == 'object') {
-            console.log("if");
             // add to songs
             personArr[userId].songs.push(playlistArr[i]);
         }
         else{
             // Create person with that id and add song.
             personArr[userId] = { id : userId, songs : []};
-            // Do ajax stuff later.
+            // Do ajax stuff later? or now? it won't affect this stuff...
+            getUserInfo(personArr[userId]);
         }
-
     }
-/*
 
- $.ajax({
- url: 'https://api.spotify.com/v1/users/'+userId,
- headers: {
- 'Authorization': 'Bearer ' + accessToken
- },
- success: function (response) {
- // Conditional for no name
- if( response.display_name !== null) {
- userName = response.display_name;
- } else {
- userName = response.id;
- }
- // Conditional for no image
- if (response.images.length != 0){
- userImg = response.images[0].url;
- } else {
- userImg = placeholder;
- }
+    //for (i=0; i < personArr.length; i++) {
+    //    getUserInfo(personArr[i]);
+    //    console.log("if");
+    //}
+}
 
- }
- });
- */
+function getUserInfo(person){
+
+    $.ajax({
+        url: 'https://api.spotify.com/v1/users/'+person.id,
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        },
+        success: function (response) {
+
+            // Conditional for no name
+            if( response.display_name !== null) {
+                personArr[person.id].userName = response.display_name;
+            } else {
+                personArr[person.id].userName = response.id;
+            }
+            // Conditional for no image
+            if (response.images.length != 0){
+                personArr[person.id].userImg = response.images[0].url;
+            } else {
+                personArr[person.id].userImg = placeholder;
+            }
+
+        }
+    });
+
+};
+
 /* V1
     // Cycle through to collect all unique users.
     // First get all user hrefs, then reduce to unique.
@@ -162,7 +160,6 @@ function songCheck(){
     }
 
 */
-}
 
 function displayStuff(){
     // Display
