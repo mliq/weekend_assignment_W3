@@ -1,23 +1,32 @@
-// Your use of the YouTube API must comply with the Terms of Service:
-// https://developers.google.com/youtube/terms
 
-// Helper function to display JavaScript value on HTML page.
-function showResponse(response) {
-    var responseString = JSON.stringify(response, '', 2);
-    document.getElementById('response').innerHTML += responseString;
-}
+$(document).ready(function(){
 
-// Called automatically when JavaScript client library is loaded.
-function onClientLoad() {
-    gapi.client.load('youtube', 'v3', onYouTubeApiLoad);
-}
 
-// Called automatically when YouTube API interface is loaded (see line 9).
-function onYouTubeApiLoad() {
-    // This API key is intended for use only in this lesson.
-    // See http://goo.gl/PdPA1 to get a key for your own applications.
-    gapi.client.setApiKey('AIzaSyCR5In4DZaTP6IEZQ0r1JceuvluJRzQNLE');
+    $.getJSON('https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tracks', )
 
-    // Add code here to test out showResponse():
+    $.ajax({
+        type: 'GET',
+        url: 'https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tracks',
+        headers: {
+            'Authorization' : 'Bearer BQBSWPXdOapkLMqzKjvIYmIItqGtK2tUZhlFmeazjyg3I0rqH7YE_p4rXZgJ8jGNfgBggYy5tue1L',
+            'Accept' : 'application/json'
+        },
+        //beforeSend: function(xhr) {
+        //    xhr.setRequestHeader('Authorization', 'Bearer BQBSWPXdOapkLMqzKjvIYmIItqGtK2tUZhlFmeazjyg3I0rqH7YE_p4rXZgJ8jGNfgBggYy5tue1L');
+        //},
+        //processData: false,
+        crossDomain: true,
+        dataType: 'json',
+        //accepts: 'application/json',
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (xhr, status, error) {
+            alert('Error: ' + status + " " + error);
 
-}
+        }
+    });
+
+    $.get('https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tracks'),
+});

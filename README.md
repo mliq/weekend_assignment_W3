@@ -34,6 +34,8 @@ Go forth and conquer. But maybe more importantly, have a great weekend. Come bac
 
 ALSO: If you are needing some love on the AJAX side, know that CodeSchool covers AJAX in the jQuery : Return Flight course. Check that out if you want some extra grounding.
 
+#----YOUTUBE notes below----#
+
 ## 1. Research an API
 
 Codeacademy has courses on a number of APIs, not so many are in Javascript. 
