@@ -12,7 +12,7 @@ https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tra
 
 */
 
-var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr = [], j, trackArr;
+var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr, j, trackArr, userId;
 var placeholder = "http://placekitten.com/200/300";
 
 Array.prototype.unique2 = function()
@@ -33,6 +33,7 @@ Array.prototype.unique2 = function()
 function Person(href, name,image){
     this.href = href;
     this.songs = [];
+
     this.name = name;
     this.image = image;
 }
@@ -45,9 +46,50 @@ function getStuff(obj) {
 
     // Array of tracks
     playlistArr = obj.tracks.items;
+
+    // Let's try to do it with one cycle.
+    // Cycle through songs, if userHref is a person already, add it, otherwise, create person.
+    // Can do it by assigning the object names as the href? that will be ugly though.
+    // do by added_by.id instead.
+    userArr = [], personArr = [];
+
+    for(i=0; i < playlistArr.length; i++) {
+        userId = playlistArr[i].added_by.id;
+        if(personArr.userId) {
+            // loop and find to add to songs
+        }
+        else{
+            // 1. Do .ajax request to get persons info,
+            // 2. On complete, create person with that info.
+            $.ajax({
+                url: 'https://api.spotify.com/v1/users/'+,
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                success: function (response) {
+
+                    // Conditional for no name
+                    if( response.display_name !== null) {
+                        userName = response.display_name;
+                    } else {
+                        userName = response.id;
+                    }
+                    // Conditional for no image
+                    if (response.images.length != 0){
+                        userImg = response.images[0].url;
+                    } else {
+                        userImg = placeholder;
+                    }
+                    personArr.push(new Person(userHref, userName, userImg));
+                }
+            });
+        }
+
+    }
+
+
     // Cycle through to collect all unique users.
     // First get all user hrefs, then reduce to unique.
-    userArr = [];
     for(i = 0; i<playlistArr.length; i++){
         userArr.push(playlistArr[i].added_by.href);
     }
@@ -64,6 +106,7 @@ function getStuff(obj) {
                 'Authorization': 'Bearer ' + accessToken
             },
             success: function (response) {
+
                 // Conditional for no name
                 if( response.display_name !== null) {
                     userName = response.display_name;
