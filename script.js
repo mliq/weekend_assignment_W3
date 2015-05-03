@@ -1,6 +1,5 @@
 
 /*
-
 https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tracks
   headers: {
  'Authorization' : 'Bearer BQBSWPXdOapkLMqzKjvIYmIItqGtK2tUZhlFmeazjyg3I0rqH7YE_p4rXZgJ8jGNfgBggYy5tue1L',
@@ -13,14 +12,41 @@ https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tra
 
 */
 
-//var access_token = 'BQBSWPXdOapkLMqzKjvIYmIItqGtK2tUZhlFmeazjyg3I0rqH7YE_p4rXZgJ8jGNfgBggYy5tue1L';
+var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i;
 
-//var redirectString = encodeURI('http://localhost:63342');
-var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg;
+Array.prototype.unique2 = function()
+{ // Source: http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
+    var n = {},r=[];
+    for(var i = 0; i < this.length; i++)
+    {
+        if (!n[this[i]])
+        {
+            n[this[i]] = true;
+            r.push(this[i]);
+        }
+    }
+    return r;
+};
 
 function getStuff(obj) {
+    // How can I sort into usernames?
+    // Hm... I could make each user an Object.
+    // First cycle through and collect each unique user.
+    // Then add their songs to an array of songs
+
     // Array of tracks
     playlistArr = obj.tracks.items;
+    // Cycle through to collect all unique users.
+    // First get all user hrefs, then reduce to unique.
+    userArr = [];
+    for(i = 0; i<playlistArr.length; i++){
+        userArr.push(playlistArr[i].added_by.href);
+    }
+    userArr = userArr.unique2();
+    // Now make all of those objects with href, name, image, and songs array
+
+
+    // Extract key pieces of data
     userHref = playlistArr[0].added_by.href;
     trackName = playlistArr[0].track.name;
     trackArtist = playlistArr[0].track.artists[0].name;
