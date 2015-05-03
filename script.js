@@ -53,14 +53,15 @@ function getStuff(obj) {
 
     for(i=0; i < playlistArr.length; i++) {
         userId = playlistArr[i].added_by.id;
-        if(typeof personArr.userId != 'undefined') {
+
+        if(typeof personArr[userId] == 'object') {
+            console.log("if");
             // add to songs
-            personArr.userId.songs.push(playlistArr[i]);
+            personArr[userId].songs.push(playlistArr[i]);
         }
         else{
             // Create person with that id and add song.
-            var songs = [playlistArr[i]];
-            personArr[userId] = { id : userId, songs : songs};
+            personArr[userId] = { id : userId, songs : []};
             // Do ajax stuff later.
         }
 
