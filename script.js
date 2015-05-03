@@ -12,7 +12,7 @@ https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tra
 
 */
 
-var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i;
+var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr = [];
 var placeholder = "http://placekitten.com/200/300";
 
 Array.prototype.unique2 = function()
@@ -54,7 +54,7 @@ function getStuff(obj) {
     userArr = userArr.unique2();
 
     // Now make all of those objects with href, name, image, and songs array
-    // Synchronicity issues, so need to get all users first, then make the objects.
+    // Wait, maybe this would work if i was making a new object? And just pushing.
 
     for(i = 0; i < userArr.length; i++){
         // Get user's profile from href
@@ -65,13 +65,19 @@ function getStuff(obj) {
                 'Authorization': 'Bearer ' + accessToken
             },
             success: function (response) {
-                userName = response.display_name;
+                // Conditional for no name
+                if( response.display_name !== null) {
+                    userName = response.display_name;
+                } else {
+                    userName = response.id;
+                }
+                // Conditional for no image
                 if (response.images.length != 0){
                     userImg = response.images[0].url;
                 } else {
                     userImg = placeholder;
                 }
-                userArr[i] = new Person(userHref, userName, userImg);
+                personArr.push(new Person(userHref, userName, userImg));
             }
         });
     }
