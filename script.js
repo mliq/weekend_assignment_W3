@@ -33,7 +33,7 @@ $(document).ready(function(){
         // #access_token=BQCv0tBWjrsOHmzsQAVXUOtwBfmuinP1ewwnoy65eiqI-YnD1syxz_3gF2drDlvgf4gnQBcJtK_44OzgkJFxprypaM7BEbGjJ6-FrH7_3Znfa72j-jHUGHo-ParaFZ3G4hC07nyodMX5w3NeC-4&token_type=Bearer&expires_in=3600
         //
         $.ajax({
-            url: 'https://api.spotify.com/v1/me',
+            url: 'https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ',
             headers: {
                 'Authorization': 'Bearer ' + accessToken
             },
@@ -41,28 +41,12 @@ $(document).ready(function(){
                 console.log(response);
             }
         });
+
+
     }
 });
 
 /*
-    $.ajax({
-
-        url: 'https://accounts.spotify.com/authorize/?client_id=e92000c6062c400c9b96d67d7df5e39e&response_type=token&redirect_uri='+encodeURI('http://localhost:63342/weekend_assignment_W3/index.html')+'&scope=playlist-read-private',
-        //url: 'https://accounts.spotify.com/authorize',
-        //headers: {
-        //    'client_id': 'e92000c6062c400c9b96d67d7df5e39e',
-        //    'response_type': 'token'
-        //    'redirect_uri': redirectString
-            //'Access-Control-Allow-Origin': 'http://localhost:63342'
-        //},
-        success: function(response) {
-            console.log(response);
-        },
-        error: function (xhr, status) {
-            alert('Error: ' + status);
-        }
-    });
-*/
 
     //$.ajax({
     //    url: 'https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tracks',
