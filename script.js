@@ -13,6 +13,7 @@ https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tra
 */
 
 var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i;
+var placeholder = "http://placekitten.com/200/300";
 
 Array.prototype.unique2 = function()
 { // Source: http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
@@ -27,6 +28,14 @@ Array.prototype.unique2 = function()
     }
     return r;
 };
+
+// Person constructor function
+function Person(href, name,image){
+    this.href = href;
+    this.songs = [];
+    this.name = name;
+    this.image = image;
+}
 
 function getStuff(obj) {
     // How can I sort into usernames?
@@ -43,8 +52,29 @@ function getStuff(obj) {
         userArr.push(playlistArr[i].added_by.href);
     }
     userArr = userArr.unique2();
-    // Now make all of those objects with href, name, image, and songs array
 
+    // Now make all of those objects with href, name, image, and songs array
+    // Synchronicity issues, so need to get all users first, then make the objects.
+
+    for(i = 0; i < userArr.length; i++){
+        // Get user's profile from href
+        userHref = userArr[i];
+        $.ajax({
+            url: userHref,
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            },
+            success: function (response) {
+                userName = response.display_name;
+                if (response.images.length != 0){
+                    userImg = response.images[0].url;
+                } else {
+                    userImg = placeholder;
+                }
+                userArr[i] = new Person(userHref, userName, userImg);
+            }
+        });
+    }
 
     // Extract key pieces of data
     userHref = playlistArr[0].added_by.href;
