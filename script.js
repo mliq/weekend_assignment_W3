@@ -30,13 +30,11 @@ Array.prototype.unique2 = function()
 };
 
 // Person constructor function
-function Person(href, name,image){
-    this.href = href;
-    this.songs = [];
-
-    this.name = name;
-    this.image = image;
-}
+//function Person(name){
+//    this.name = name;
+//    this.image = "";
+//    this.songs = [];
+//}
 
 function getStuff(obj) {
     // How can I sort into usernames?
@@ -51,43 +49,46 @@ function getStuff(obj) {
     // Cycle through songs, if userHref is a person already, add it, otherwise, create person.
     // Can do it by assigning the object names as the href? that will be ugly though.
     // do by added_by.id instead.
-    userArr = [], personArr = [];
+    userArr = [], personArr = {};
 
     for(i=0; i < playlistArr.length; i++) {
         userId = playlistArr[i].added_by.id;
         if(personArr.userId) {
-            // loop and find to add to songs
+            // add to songs
+            personArr.userId.songs.push(playlistArr[i]);
         }
         else{
-            // 1. Do .ajax request to get persons info,
-            // 2. On complete, create person with that info.
-            $.ajax({
-                url: 'https://api.spotify.com/v1/users/'+,
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken
-                },
-                success: function (response) {
-
-                    // Conditional for no name
-                    if( response.display_name !== null) {
-                        userName = response.display_name;
-                    } else {
-                        userName = response.id;
-                    }
-                    // Conditional for no image
-                    if (response.images.length != 0){
-                        userImg = response.images[0].url;
-                    } else {
-                        userImg = placeholder;
-                    }
-                    personArr.push(new Person(userHref, userName, userImg));
-                }
-            });
+            // Create person with that id and add song.
+            personArr[userId] = { songs: [playlistArr[i]]};
+            // Do ajax stuff later.
         }
 
     }
+/*
 
+ $.ajax({
+ url: 'https://api.spotify.com/v1/users/'+userId,
+ headers: {
+ 'Authorization': 'Bearer ' + accessToken
+ },
+ success: function (response) {
+ // Conditional for no name
+ if( response.display_name !== null) {
+ userName = response.display_name;
+ } else {
+ userName = response.id;
+ }
+ // Conditional for no image
+ if (response.images.length != 0){
+ userImg = response.images[0].url;
+ } else {
+ userImg = placeholder;
+ }
 
+ }
+ });
+ */
+/* V1
     // Cycle through to collect all unique users.
     // First get all user hrefs, then reduce to unique.
     for(i = 0; i<playlistArr.length; i++){
@@ -158,6 +159,7 @@ function songCheck(){
         }
     }
 
+*/
 }
 
 function displayStuff(){
@@ -171,14 +173,11 @@ $(document).ready(function(){
     if(window.location.hash == "") {
         location = 'https://accounts.spotify.com/authorize/?client_id=e92000c6062c400c9b96d67d7df5e39e&response_type=token&redirect_uri=' + encodeURI('http://localhost:63342/weekend_assignment_W3/index.html') + '&scope=playlist-read-private';
     } else {
-        // Comes back with: http://localhost:63342/weekend_assignment_W3/index.html#access_token=BQD2oCPPaVJGn00r2ydYwfX-hPliSZldYGhA48MstWzw6EDwLzLzbKi3-b286VzPlnglzYTaKkRc5sHQlrvj4i3m87iyiFob9AK15Wcf76Qg9NHqF81cr-kiArcGi3uNCWqUjEhOHC8-tgg3Y4U&token_type=Bearer&expires_in=3600
 
         var hash = window.location.hash;
         accessToken = hash.slice(14);
         console.log(hash);
 
-        // #access_token=BQCv0tBWjrsOHmzsQAVXUOtwBfmuinP1ewwnoy65eiqI-YnD1syxz_3gF2drDlvgf4gnQBcJtK_44OzgkJFxprypaM7BEbGjJ6-FrH7_3Znfa72j-jHUGHo-ParaFZ3G4hC07nyodMX5w3NeC-4&token_type=Bearer&expires_in=3600
-        //
         $.ajax({
             url: 'https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ',
             headers: {
