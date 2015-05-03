@@ -35,7 +35,7 @@ function getStuff(obj) {
     playlistArr = obj.tracks.items;
     userArr = [], personArr = {};
 
-    for(i=0; i < playlistArr.length; i++) {
+    for(i = 0; i < playlistArr.length; i++) {
         userId = playlistArr[i].added_by.id;
         if(typeof personArr[userId] == 'object') {
             // add to songs
@@ -48,8 +48,15 @@ function getStuff(obj) {
             getUserInfo(personArr[userId]);
         }
     }
+    // Add number so I can cycle through? Or array of names is easier.
+    var arrayOfNames = [];
+    for(name in personArr){
+        displayStuff(personArr[name]);
+        //arrayOfNames.push(name);
+    }
+    //console.log(arrayOfNames);
 
-    displayStuff(personArr['5nahalf']);
+    //displayStuff(personArr['5nahalf']);
 }
 
 function getUserInfo(person){
@@ -126,16 +133,15 @@ function displayStuff(user){
                 trackArtist = user.songs[i].track.artists[0].name;
                 trackHref = user.songs[i].track.preview_url;
 
-                songRows += "<div class='row col-xs-12'><span class='trackName col-xs-3'>Track: " + trackName +
-                    "</span><span class = 'Artist col-xs-3'>Artist: " + trackArtist +
-                    "</span><a class='playTrack col-xs-3' href=" + trackHref + ">Play Track</a>" +
+                songRows += "<div class='row'><span class='trackName col-xs-4'>Track: " + trackName +
+                    "</span><span class = 'Artist col-xs-4'>Artist: " + trackArtist +
+                    "</span><a class='playTrack col-xs-4' href=" + trackHref + ">Preview Track</a>" +
                     "</div>";
             }
 
-
             // Do the displaying:
-            $('.results').empty();
-            $('.results').hide();
+            //$('.results').empty();
+            //$('.results').hide();
             $('.results').append('<div class="gallery-head">' + user['userName'] + '</div>');
             $('.results').append('<div class="gallery-img"><img src="' + user['userImg'] + '"></div>');
             $('.results').append('<div class="gallery-songs col-xs-12"><h4>Songs Added: </h4><p>' + songRows + '</p></div>');
@@ -146,6 +152,10 @@ function displayStuff(user){
 
 
 $(document).ready(function(){
+
+    //$('body').on('hover','.row',function(){
+    //    $(this).css('background-color','white');
+    //});
 
     // Redirect for authorization.
     if(window.location.hash == "") {

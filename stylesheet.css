@@ -1,0 +1,22 @@
+.row {
+    background-color: #black;
+    color: greenyellow;
+}
+
+.row:hover {
+    background-color: #0b97c4;
+}
+
+img {
+    height: auto;
+    width: 40%;
+}
+
+body {
+    background-color: #222222;
+    color: white;
+}
+
+a {
+    color: white;
+}
