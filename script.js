@@ -153,10 +153,6 @@ function displayStuff(user){
 
 $(document).ready(function(){
 
-    //$('body').on('hover','.row',function(){
-    //    $(this).css('background-color','white');
-    //});
-
     // Redirect for authorization.
     if(window.location.hash == "") {
         location = 'https://accounts.spotify.com/authorize/?client_id=e92000c6062c400c9b96d67d7df5e39e&response_type=token&redirect_uri=' + encodeURI('http://localhost:63342/weekend_assignment_W3/index.html') + '&scope=playlist-read-private';

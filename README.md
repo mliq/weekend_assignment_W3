@@ -11,6 +11,15 @@ App:
   - Format: List of user names, click on them and it expands which songs they added? Eh maybe better something that could be browsed... Could have an expand all button also...  Or show just the profile images... I like that idea.
 2. How many times they were played.
 
+# Other App Ideas with this API:
+1. what i just did..
+2. Automatically create playlists based on something.
+3. Make a backup of your playlists or other playlists
+4. An artist could track their top tracks/related artists over time
+5. One could build a web of recommendations by following chains of related artists.
+6. One could automatically create playlists with new releases or mixes of certain categories
+7. A program that converts iTunes playlists to Spotify and vice versa.
+
 ## Learnings:
 1. document.url, .hash to get auth code, registering an API application.
 2. jQuery .when for resolving multiple AJAX requests.
