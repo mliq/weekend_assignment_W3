@@ -85,15 +85,15 @@ function displayStuff(user){
                 trackArtist = user.songs[i].track.artists[0].name;
                 trackHref = user.songs[i].track.preview_url;
 
-                songRows += "<div class='row col-xs-9'><span class='trackName col-xs-3'>" + trackName +
-                    "</span><span class = 'Artist col-xs-3'>" + trackArtist +
-                    "</span><a class='playTrack col-xs-3' href=" + trackHref + ">Preview Track</a></div>";
+                songRows += "<div class='row-fluid col-xs-12 col-sm-9 hoverRow'><span class='trackName col-sm-3'>" + trackName +
+                    "</span><span class = 'Artist col-sm-4'>" + trackArtist +
+                    "</span><span class='playTrack col-sm-2'><a href=" + trackHref + ">Preview Track</a></span></div>";
             }
 
             // Do the displaying:
             var htmlString = '';
 
-            htmlString = '<div class="row col-xs-12"><div class="col-xs-3">' + user['userName'] + '<br><img src="' + user['userImg'] + '"></div>'+ '<span class="col-xs-3">Track </span><span class="col-xs-3">Artist</span><span class="col-xs-3">Preview</span>' + songRows + '</div>';
+            htmlString = '<div class="row-fluid col-xs-12"><div class="col-xs-12 col-sm-3">' + user['userName'] + '<br><img src="' + user['userImg'] + '"></div>'+ '<span class="col-xs-3">Track </span><span class="col-xs-3">Artist</span><span class="col-xs-3">Preview</span>' + songRows + '</div>';
             //$('.results').slideDown(2000);
             $('.results').append(htmlString);
 
