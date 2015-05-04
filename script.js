@@ -1,20 +1,6 @@
 
-/*
-https://api.spotify.com/v1/users/1242734119/playlists/0TfhLEsZWwxwmspQ9lQtaZ/tracks
-  headers: {
- 'Authorization' : 'Bearer BQBSWPXdOapkLMqzKjvIYmIItqGtK2tUZhlFmeazjyg3I0rqH7YE_p4rXZgJ8jGNfgBggYy5tue1L',
- 'Accept' : 'application/json'
- },
- Client ID
- e92000c6062c400c9b96d67d7df5e39e
- Client Secret
- 019eb23d5d0248e9bc92699f07e80c10
-
-*/
-
 var accessToken,playlistArr,userHref,trackName,trackArtist,trackHref,userName,userImg, userArr, i, personArr, j, trackArr, userId;
 var placeholder = "http://placekitten.com/g/200/300";
-var currentGame = 0;
 
 Array.prototype.unique2 = function()
 { // Source: http://jszen.com/best-way-to-get-unique-values-of-an-array-in-javascript.7.html
@@ -48,15 +34,10 @@ function getStuff(obj) {
             getUserInfo(personArr[userId]);
         }
     }
-    // Add number so I can cycle through? Or array of names is easier.
-    var arrayOfNames = [];
     for(name in personArr){
         displayStuff(personArr[name]);
-        //arrayOfNames.push(name);
     }
-    //console.log(arrayOfNames);
 
-    //displayStuff(personArr['5nahalf']);
 }
 
 function getUserInfo(person){
@@ -86,35 +67,6 @@ function getUserInfo(person){
 
 }
 
-// Button functionality
-function showNextGame() {
-    // Check if "next" index is not going to be invalid
-    if (currentGame+1 < games.length) {
-        currentGame++;
-    }
-    else {
-        currentGame = 0;
-    }
-    selectGameIcon();
-    $('.js-gallery-game').fadeOut(function(){
-        games[currentGame].display();
-    });
-}
-
-function showPrevGame() {
-    // Check if "previous" index is not going to be invalid
-    if (currentGame-1 >= 0) {
-        currentGame--;
-    }
-    else {
-        currentGame = games.length-1;
-    }
-    selectGameIcon();
-    $('.js-gallery-game').fadeOut(function(){
-        games[currentGame].display();
-    });
-}
-
 function displayStuff(user){
     console.log(user);
 
@@ -133,15 +85,13 @@ function displayStuff(user){
                 trackArtist = user.songs[i].track.artists[0].name;
                 trackHref = user.songs[i].track.preview_url;
 
-                songRows += "<div class='row'><span class='trackName col-xs-4'>Track: " + trackName +
-                    "</span><span class = 'Artist col-xs-4'>Artist: " + trackArtist +
+                songRows += "<div class='row'><span class='trackName col-xs-4'>" + trackName +
+                    "</span><span class = 'Artist col-xs-4'>" + trackArtist +
                     "</span><a class='playTrack col-xs-4' href=" + trackHref + ">Preview Track</a>" +
                     "</div>";
             }
 
             // Do the displaying:
-            //$('.results').empty();
-            //$('.results').hide();
             $('.results').append('<div class="gallery-head">' + user['userName'] + '</div>');
             $('.results').append('<div class="gallery-img"><img src="' + user['userImg'] + '"></div>');
             $('.results').append('<div class="gallery-songs col-xs-12"><h4>Songs Added: </h4><p>' + songRows + '</p></div>');
